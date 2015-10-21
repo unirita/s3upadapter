@@ -19,10 +19,9 @@ import (
 
 //モックのインタフェース
 type UploadMock interface {
-	Upload(string, string, string) error
+	Upload(bucket string, uploadKey string, localPath string) error
 	getS3Instance() *s3.S3
-	GetObject(*s3.GetObjectInput) (*s3.GetObjectOutput, error)
-	uploadFile(string, string, string) error
+	uploadFile(bucket string, uploadKey string, localPath string) error
 }
 
 func Upload(bucket string, uploadKey string, localPath string) error {
@@ -68,10 +67,6 @@ func uploadFile(bucket string, uploadKey string, localPath string) error {
 
 	fmt.Printf("Uploaded [%s]", result.Location)
 	return nil
-}
-
-func createLocation(key string) {
-
 }
 
 //S3のインスタンスを取得する
