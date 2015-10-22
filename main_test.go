@@ -25,7 +25,7 @@ func makeUploadFail() {
 }
 
 func restoreUploadFunc() {
-	doUpload = upload.Upload
+	doUpload = upload.Do
 }
 
 func TestFetchArgs_コマンドラインオプションを取得できる(t *testing.T) {

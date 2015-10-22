@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
-func Upload(bucket string, key string, localPath string) error {
+func Do(bucket string, key string, localPath string) error {
 	file, err := os.Open(localPath)
 	if err != nil {
 		return err

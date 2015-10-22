@@ -37,7 +37,7 @@ const (
 
 type uploadFunc func(string, string, string) error
 
-var doUpload uploadFunc = upload.Upload
+var doUpload uploadFunc = upload.Do
 
 func main() {
 	args := fetchArgs()
