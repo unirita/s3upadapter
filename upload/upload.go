@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/defaults"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
@@ -51,34 +50,4 @@ func uploadFile(bucket string, uploadKey string, localPath string) error {
 
 	fmt.Printf("Uploaded [%s]", result.Location)
 	return nil
-}
-
-func createConf() *aws.Config {
-	conf := aws.NewConfig()
-
-	if config.Log.LogDebug == config.Log_Flag_OFF {
-		conf.WithLogLevel(aws.LogOff)
-	} else {
-
-		loglevel := aws.LogDebug
-
-		if config.Log.LogSigning == config.Log_Flag_ON {
-			loglevel |= aws.LogDebugWithSigning
-		}
-
-		if config.Log.LogHTTPBody == config.Log_Flag_ON {
-			loglevel |= aws.LogDebugWithHTTPBody
-		}
-
-		if config.Log.LogRequestRetries == config.Log_Flag_ON {
-			loglevel |= aws.LogDebugWithRequestRetries
-		}
-
-		if config.Log.LogRequestErrors == config.Log_Flag_ON {
-			loglevel |= aws.LogDebugWithRequestErrors
-		}
-
-		conf.WithLogLevel(loglevel)
-	}
-	return conf
 }
