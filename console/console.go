@@ -9,13 +9,13 @@ import (
 
 // USAGE表示用の定義メッセージ
 const USAGE = `Usage :
-    s3upadapter.exe [-v] [-b Bucket] [-k Key] [-l Localfile] [-c ConfigPath]
+    s3upadapter [-v] [-b BucketName] [-k KeyName] [-f FilePath] [-c ConfigPath]
 Option :
     -v                   :  　Print s3upadapter version.
-    -b bucket name       :  　Designate a buket name.
-    -k key name          :  　Designate a key name.
-    -l local Path        :  　Designate a local Path.
-    -c configFile Path   :  　Designate configFile Path.
+    -b BucketName        :  　Designate s3 buket name.
+    -k KeyName           :  　Designate s3 key name.
+    -f FilePath          :  　Designate local path of upload file.
+    -c config file path  :  　Designate config file path.
 
     -b, -l, -c is a required input.
 Copyright 2015 unirita Inc.
