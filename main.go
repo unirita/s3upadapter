@@ -44,16 +44,14 @@ func realMain(args *arguments) int {
 		return rc_OK
 	}
 
-	if args.bucketName == "" || args.localFile == "" || args.configPath == "" {
+	if args.bucketName == "" || args.uploadKey == "" || args.localFile == "" || args.configPath == "" {
 		showUsage()
 		return rc_ERROR
 	}
 
-	if args.uploadKey != "" {
-		if !strings.HasSuffix(args.uploadKey, "/") {
-			console.Display("ADP001E")
-			return rc_ERROR
-		}
+	if strings.HasSuffix(args.uploadKey, "/") {
+		console.Display("ADP001E")
+		return rc_ERROR
 	}
 
 	if err := config.Load(args.configPath); err != nil {

@@ -145,12 +145,11 @@ func TestRealMain_引数に設定ファイルのパスが指定されていな�
 	}
 }
 
-func TestRealMain_引数のキー名にディレクトリが指定されていない場合(t *testing.T) {
+func TestRealMain_引数にキー名が指定されていない場合(t *testing.T) {
 	c := testutil.NewStdoutCapturer()
 
 	args := new(arguments)
 	args.bucketName = "bucket"
-	args.uploadKey = "nodir"
 	args.localFile = "localpath"
 	args.configPath = "config.ini"
 
@@ -161,7 +160,29 @@ func TestRealMain_引数のキー名にディレクトリが指定されてい�
 	if rc != rc_ERROR {
 		t.Errorf("想定外のrc[%d]が返された。", rc)
 	}
-	if !strings.Contains(out, "KEY MUST BE S3 DIR. KEY NEED TO SPECIFY THE LAST IN /.") {
+	if !strings.Contains(out, "Usage :") {
+		t.Error("出力内容が想定と違っている。")
+		t.Logf("出力: %s", out)
+	}
+}
+
+func TestRealMain_キー名としてディレクトリが指定された場合(t *testing.T) {
+	c := testutil.NewStdoutCapturer()
+
+	args := new(arguments)
+	args.bucketName = "bucket"
+	args.uploadKey = "test/"
+	args.localFile = "localpath"
+	args.configPath = "config.ini"
+
+	c.Start()
+	rc := realMain(args)
+	out := c.Stop()
+
+	if rc != rc_ERROR {
+		t.Errorf("想定外のrc[%d]が返された。", rc)
+	}
+	if !strings.Contains(out, "DIRECTORY CAN NOT BE SPECIFIED") {
 		t.Error("出力内容が想定と違っている。")
 		t.Logf("出力: %s", out)
 	}
@@ -172,7 +193,7 @@ func TestRealMain_存在しない設定ファイルが指定された場合(t *t
 
 	args := new(arguments)
 	args.bucketName = "testbucket"
-	args.uploadKey = "testuploadlocation/"
+	args.uploadKey = "testuploadlocation/test.txt"
 	args.localFile = "testlocalpath"
 	args.configPath = "noexistsconf.ini"
 
@@ -194,7 +215,7 @@ func TestRealMain_不正な内容の設定ファイルが指定された場合(t
 
 	args := new(arguments)
 	args.bucketName = "testbucket"
-	args.uploadKey = "testuploadlocation/"
+	args.uploadKey = "testuploadlocation/test.txt"
 	args.localFile = "testlocalpath"
 	if runtime.GOOS == "windows" {
 		args.configPath = "test\\configerror.ini"

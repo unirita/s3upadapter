@@ -6,7 +6,6 @@ package upload
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/defaults"
@@ -25,13 +24,10 @@ func Upload(bucket string, key string, localPath string) error {
 	}
 	defer file.Close()
 
-	_, fileName := filepath.Split(localPath)
-	remotePath := key + fileName
-
 	u := s3manager.NewUploader(nil)
 	result, err := u.Upload(&s3manager.UploadInput{
 		Bucket: &bucket,
-		Key:    &remotePath,
+		Key:    &key,
 		Body:   file})
 	if err != nil {
 		return err
