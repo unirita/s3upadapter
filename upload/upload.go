@@ -11,26 +11,17 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/defaults"
-	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 
 	"github.com/unirita/s3upadapter/config"
 )
 
 func Upload(bucket string, uploadKey string, localPath string) error {
-	//設定ファイルの情報を与えてS3のインスタンスを作成する
-	client := getS3Instance()
+	defaults.DefaultConfig.Credentials = credentials.NewStaticCredentials(config.Aws.AccessKeyId, config.Aws.SecletAccessKey, "")
+	defaults.DefaultConfig.Region = &config.Aws.Region
 
 	var upLocation string
 	_, fileName := filepath.Split(localPath)
-
-	if uploadKey != "" {
-		params := &s3.GetObjectInput{Bucket: &bucket, Key: &uploadKey}
-		_, connectErr := client.GetObject(params)
-		if connectErr != nil {
-			return connectErr
-		}
-	}
 
 	upLocation = uploadKey + fileName
 
@@ -60,14 +51,6 @@ func uploadFile(bucket string, uploadKey string, localPath string) error {
 
 	fmt.Printf("Uploaded [%s]", result.Location)
 	return nil
-}
-
-//S3のインスタンスを取得する
-func getS3Instance() *s3.S3 {
-	defaults.DefaultConfig.Credentials = credentials.NewStaticCredentials(config.Aws.AccessKeyId, config.Aws.SecletAccessKey, "")
-	defaults.DefaultConfig.Region = &config.Aws.Region
-
-	return s3.New(createConf())
 }
 
 func createConf() *aws.Config {
