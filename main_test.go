@@ -1,16 +1,32 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"os"
 	"runtime"
 	"strings"
 	"testing"
 
-	"github.com/unirita/s3dladapter/testutil"
+	"github.com/unirita/s3upadapter/testutil"
+	"github.com/unirita/s3upadapter/upload"
 )
 
-var testDataDir string
+func makeUploadSuccess() {
+	doUpload = func(bucket string, key string, localPath string) error {
+		return nil
+	}
+}
+
+func makeUploadFail() {
+	doUpload = func(bucket string, key string, localPath string) error {
+		return errors.New("error")
+	}
+}
+
+func restoreUploadFunc() {
+	doUpload = upload.Upload
+}
 
 func TestFetchArgs_コマンドラインオプションを取得できる(t *testing.T) {
 	flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.PanicOnError)

@@ -6,6 +6,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/defaults"
+
 	"github.com/unirita/s3upadapter/config"
 	"github.com/unirita/s3upadapter/console"
 	"github.com/unirita/s3upadapter/upload"
@@ -31,6 +34,10 @@ const (
 	flag_ON  = true
 	flag_OFF = false
 )
+
+type uploadFunc func(string, string, string) error
+
+var doUpload uploadFunc = upload.Upload
 
 func main() {
 	args := fetchArgs()
@@ -64,8 +71,7 @@ func realMain(args *arguments) int {
 		return rc_ERROR
 	}
 
-	//アップロード処理
-	if err := upload.Upload(args.bucketName, args.keyName, args.filePath); err != nil {
+	if err := doUpload(args.bucketName, args.keyName, args.filePath); err != nil {
 		console.Display("UPA004E", err)
 		return rc_ERROR
 	}
