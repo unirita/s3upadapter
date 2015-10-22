@@ -10,6 +10,10 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
+type uploadFunc func(*s3manager.UploadInput) (*s3manager.UploadOutput, error)
+
+var upload uploadFunc = s3manager.NewUploader(nil).Upload
+
 func Do(bucket string, key string, localPath string) error {
 	file, err := os.Open(localPath)
 	if err != nil {
@@ -17,8 +21,7 @@ func Do(bucket string, key string, localPath string) error {
 	}
 	defer file.Close()
 
-	u := s3manager.NewUploader(nil)
-	result, err := u.Upload(&s3manager.UploadInput{
+	result, err := upload(&s3manager.UploadInput{
 		Bucket: &bucket,
 		Key:    &key,
 		Body:   file})
