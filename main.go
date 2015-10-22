@@ -71,6 +71,8 @@ func realMain(args *arguments) int {
 		return rc_ERROR
 	}
 
+	defaults.DefaultConfig.Credentials = credentials.NewStaticCredentials(config.Aws.AccessKeyId, config.Aws.SecletAccessKey, "")
+	defaults.DefaultConfig.Region = &config.Aws.Region
 	if err := doUpload(args.bucketName, args.keyName, args.filePath); err != nil {
 		console.Display("UPA004E", err)
 		return rc_ERROR
