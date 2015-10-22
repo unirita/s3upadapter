@@ -41,7 +41,7 @@ func TestDo_アップロードに失敗した場合(t *testing.T) {
 	makeUploadFail()
 	defer restoreUploadFunc()
 
-	err := Do("testbucket", "testkey", filepath.Join("testdata", "correct.ini"))
+	err := Do("testbucket", "testkey", filepath.Join("testdata", "exists.txt"))
 	if err == nil {
 		t.Fatal("エラーが発生していない。")
 	}
