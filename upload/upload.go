@@ -17,13 +17,6 @@ import (
 	"github.com/unirita/s3upadapter/config"
 )
 
-//モックのインタフェース
-type UploadMock interface {
-	Upload(bucket string, uploadKey string, localPath string) error
-	getS3Instance() *s3.S3
-	uploadFile(bucket string, uploadKey string, localPath string) error
-}
-
 func Upload(bucket string, uploadKey string, localPath string) error {
 	//設定ファイルの情報を与えてS3のインスタンスを作成する
 	client := getS3Instance()

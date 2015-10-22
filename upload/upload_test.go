@@ -5,26 +5,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 
-	//	"github.com/golang/mock/gomock"
-
 	"github.com/unirita/s3upadapter/config"
 )
-
-//func TestUpload_Upload内で実行されるメソッドが呼び出される(t *testing.T) {
-//	ctrl := gomock.NewController(t)
-//	defer ctrl.Finish()
-
-//	mockUpload := NewMockUploadMock(ctrl)
-
-//	mockGetS3 := mockUpload.EXPECT().getS3Instance()
-//	mockUpFile := mockUpload.EXPECT().uploadFile("bucket", "key", "localPath")
-
-//	mockUpload.EXPECT().Upload("bucket", "key", "localPath").After(mockGetS3).After(mockUpFile)
-
-//	t.Log("result", mockUpload.Upload("bucket", "key", "localPath"))
-//	t.Log("result", mockUpload.getS3Instance())
-//	t.Log("result", mockUpload.uploadFile("bucket", "key", "localPath"))
-//}
 
 func TestCreateConf_フラグがONの場合は各ログレベルにONの値が設定される(t *testing.T) {
 	config.Log.LogDebug = config.Log_Flag_ON
