@@ -233,7 +233,7 @@ func TestRealMain_不正な内容の設定ファイルが指定された場合(t
 	args.bucketName = "testbucket"
 	args.keyName = "testuploadlocation/test.txt"
 	args.filePath = "testlocalpath"
-	args.configPath = filepath.Join("test", "configerror.ini")
+	args.configPath = filepath.Join("testdata", "error.ini")
 
 	c.Start()
 	rc := realMain(args)
