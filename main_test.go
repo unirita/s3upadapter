@@ -26,7 +26,7 @@ func TestFetchArgs_コマンドラインオプションを取得できる(t *tes
 		t.Error("-bオプションの指定を検出できなかった。")
 	}
 
-	if args.uploadKey != "testkey" {
+	if args.keyName != "testkey" {
 		t.Error("-kオプションの指定を検出できなかった。")
 	}
 
@@ -53,7 +53,7 @@ func TestFetchArgs_コマンドラインオプションに値が指定されな�
 		t.Error("-bオプションの値が想定と異なっている。")
 	}
 
-	if args.uploadKey != "" {
+	if args.keyName != "" {
 		t.Error("-kオプションの値が想定と異なっている。")
 	}
 
@@ -107,7 +107,7 @@ func TestRealMain_引数にバケット名が指定されていない場合(t *t
 	c := testutil.NewStdoutCapturer()
 
 	args := new(arguments)
-	args.uploadKey = "uploadlocation"
+	args.keyName = "uploadlocation"
 	args.localFile = "localpath"
 	args.configPath = "config.ini"
 
@@ -129,7 +129,7 @@ func TestRealMain_引数に設定ファイルのパスが指定されていな�
 
 	args := new(arguments)
 	args.bucketName = "bucket"
-	args.uploadKey = "uploadlocation"
+	args.keyName = "uploadlocation"
 	args.localFile = "localpath"
 
 	c.Start()
@@ -171,7 +171,7 @@ func TestRealMain_キー名としてディレクトリが指定された場合(t
 
 	args := new(arguments)
 	args.bucketName = "bucket"
-	args.uploadKey = "test/"
+	args.keyName = "test/"
 	args.localFile = "localpath"
 	args.configPath = "config.ini"
 
@@ -193,7 +193,7 @@ func TestRealMain_存在しない設定ファイルが指定された場合(t *t
 
 	args := new(arguments)
 	args.bucketName = "testbucket"
-	args.uploadKey = "testuploadlocation/test.txt"
+	args.keyName = "testuploadlocation/test.txt"
 	args.localFile = "testlocalpath"
 	args.configPath = "noexistsconf.ini"
 
@@ -215,7 +215,7 @@ func TestRealMain_不正な内容の設定ファイルが指定された場合(t
 
 	args := new(arguments)
 	args.bucketName = "testbucket"
-	args.uploadKey = "testuploadlocation/test.txt"
+	args.keyName = "testuploadlocation/test.txt"
 	args.localFile = "testlocalpath"
 	if runtime.GOOS == "windows" {
 		args.configPath = "test\\configerror.ini"
