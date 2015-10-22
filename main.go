@@ -50,23 +50,23 @@ func realMain(args *arguments) int {
 	}
 
 	if strings.HasSuffix(args.keyName, "/") {
-		console.Display("ADP001E")
+		console.Display("UPA001E")
 		return rc_ERROR
 	}
 
 	if err := config.Load(args.configPath); err != nil {
-		console.Display("ADP002E", err)
+		console.Display("UPA002E", err)
 		return rc_ERROR
 	}
 
 	if err := config.DetectError(); err != nil {
-		console.Display("ADP003E", err)
+		console.Display("UPA003E", err)
 		return rc_ERROR
 	}
 
 	//アップロード処理
 	if err := upload.Upload(args.bucketName, args.keyName, args.localFile); err != nil {
-		console.Display("ADP004E", err)
+		console.Display("UPA004E", err)
 		return rc_ERROR
 	}
 

@@ -23,10 +23,10 @@ Copyright 2015 unirita Inc.
 
 // コンソールメッセージ一覧
 var msgs = map[string]string{
-	"ADP001E": "DIRECTORY CAN NOT BE SPECIFIED TO -k OPTION.",
-	"ADP002E": "FAILED TO READ CONFIG FILE. [%s]",
-	"ADP003E": "CONFIG PARM IS NOT EXACT FORMAT. [%s]",
-	"ADP004E": "UPLOAD FAILED. [%s]",
+	"UPA001E": "DIRECTORY CAN NOT BE SPECIFIED TO -k OPTION.",
+	"UPA002E": "FAILED TO READ CONFIG FILE. [%s]",
+	"UPA003E": "CONFIG PARM IS NOT EXACT FORMAT. [%s]",
+	"UPA004E": "UPLOAD FAILED. [%s]",
 }
 
 // 標準出力へメッセージコードcodeに対応したメッセージを表示する。
