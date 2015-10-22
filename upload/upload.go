@@ -15,35 +15,24 @@ import (
 	"github.com/unirita/s3upadapter/config"
 )
 
-func Upload(bucket string, uploadKey string, localPath string) error {
+func Upload(bucket string, key string, localPath string) error {
 	defaults.DefaultConfig.Credentials = credentials.NewStaticCredentials(config.Aws.AccessKeyId, config.Aws.SecletAccessKey, "")
 	defaults.DefaultConfig.Region = &config.Aws.Region
 
-	var upLocation string
-	_, fileName := filepath.Split(localPath)
-
-	upLocation = uploadKey + fileName
-
-	if err := uploadFile(bucket, upLocation, localPath); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func uploadFile(bucket string, uploadKey string, localPath string) error {
 	file, err := os.Open(localPath)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
 
+	_, fileName := filepath.Split(localPath)
+	remotePath := key + fileName
+
 	u := s3manager.NewUploader(nil)
 	result, err := u.Upload(&s3manager.UploadInput{
 		Bucket: &bucket,
-		Key:    &uploadKey,
+		Key:    &remotePath,
 		Body:   file})
-
 	if err != nil {
 		return err
 	}
