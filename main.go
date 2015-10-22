@@ -16,7 +16,7 @@ type arguments struct {
 	versionFlag bool   // バージョン情報表示フラグ
 	bucketName  string //バケット名
 	keyName     string //S3にアップロードする場所のキー名
-	localFile   string //アップロード元のローカルファイル
+	filePath    string //アップロード元のローカルファイル
 	configPath  string //設定ファイルのパス
 }
 
@@ -44,7 +44,7 @@ func realMain(args *arguments) int {
 		return rc_OK
 	}
 
-	if args.bucketName == "" || args.keyName == "" || args.localFile == "" || args.configPath == "" {
+	if args.bucketName == "" || args.keyName == "" || args.filePath == "" || args.configPath == "" {
 		showUsage()
 		return rc_ERROR
 	}
@@ -65,7 +65,7 @@ func realMain(args *arguments) int {
 	}
 
 	//アップロード処理
-	if err := upload.Upload(args.bucketName, args.keyName, args.localFile); err != nil {
+	if err := upload.Upload(args.bucketName, args.keyName, args.filePath); err != nil {
 		console.Display("UPA004E", err)
 		return rc_ERROR
 	}
@@ -80,7 +80,7 @@ func fetchArgs() *arguments {
 	flag.BoolVar(&args.versionFlag, "v", false, "version option")
 	flag.StringVar(&args.bucketName, "b", "", "Designate bucket option")
 	flag.StringVar(&args.keyName, "k", "", "Designate key name option")
-	flag.StringVar(&args.localFile, "l", "", "Designate config file option")
+	flag.StringVar(&args.filePath, "f", "", "Designate file path option")
 	flag.StringVar(&args.configPath, "c", "", "Designate config file option")
 	flag.Parse()
 
